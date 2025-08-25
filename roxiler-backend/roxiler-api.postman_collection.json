@@ -1,0 +1,88 @@
+{
+  "info": {
+    "name": "Roxiler Ratings API",
+    "_postman_id": "b8d20a77-xyz-4567-8901-roxiler123",
+    "description": "API collection for Admin, User, and Owner routes in Roxiler Ratings project",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Signup (User)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"user@test.com\",\n  \"address\": \"Baner, Pune\",\n  \"password\": \"User@123\"\n}"
+        },
+        "url": { "raw": "http://localhost:4000/auth/signup", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["auth", "signup"] }
+      }
+    },
+    {
+      "name": "Auth - Login (Admin)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@roxiler.com\",\n  \"password\": \"Admin@123\"\n}"
+        },
+        "url": { "raw": "http://localhost:4000/auth/login", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["auth", "login"] }
+      }
+    },
+    {
+      "name": "Auth - Login (Owner)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"owner@shop.com\",\n  \"password\": \"Owner@123\"\n}"
+        },
+        "url": { "raw": "http://localhost:4000/auth/login", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["auth", "login"] }
+      }
+    },
+    {
+      "name": "Admin - Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "http://localhost:4000/admin/dashboard", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["admin", "dashboard"] }
+      }
+    },
+    {
+      "name": "User - Get Stores",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "http://localhost:4000/stores", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["stores"] }
+      }
+    },
+    {
+      "name": "User - Rate Store",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"score\": 4\n}"
+        },
+        "url": { "raw": "http://localhost:4000/stores/1/rate", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["stores", "1", "rate"] }
+      }
+    },
+    {
+      "name": "Owner - Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "http://localhost:4000/owner/dashboard", "protocol": "http", "host": ["localhost"], "port": "4000", "path": ["owner", "dashboard"] }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "token", "value": "" }
+  ]
+}
