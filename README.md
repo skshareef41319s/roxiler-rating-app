@@ -205,7 +205,7 @@ npm install
 - In `roxiler-backend/.env` (create this file if missing), add:
 
   ```
-  DATABASE_URL="postgresql://username:password@localhost:5432/roxiler_db"
+  DATABASE_URL="mysql://username:password@localhost:3306/roxiler_db"
   JWT_SECRET="yoursecretkey"
   ```
 
@@ -272,7 +272,21 @@ Your React app will run at `http://localhost:3000`.
 - You can explore backend code in `roxiler-backend/src/`
 - You can explore frontend code in `roxiler-frontend/src/pages/`
 
-**You’re all set! If you have any issues, check this README or reach out via GitHub. Happy coding! 🚀**
+---
+
+## 🔑 Default Logins & How To Login (Demo/Test Accounts)
+
+> **For development or demo purposes, use the following credentials.  
+> You can change these in `prisma/seed.js` before running `node prisma/seed.js`.**
+
+| Role   | Email              | Password    |
+|--------|--------------------|------------|
+| Admin  | admin@roxiler.com  | Admin@123  |
+| Owner  | owner@shop.com     | Owner@123  |
+
+- **User:** Register any new user via the Signup page.  
+- **Admin/Owner:** Provided via seed data for quick demo access.
+- **To add more Admins/Owners:** Use the "Add User" form from the Admin dashboard and select the desired role.
 
 ---
 
