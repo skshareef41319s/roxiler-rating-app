@@ -1,310 +1,212 @@
-# ⭐️ ROXILER PROJECT
+# ROXILER PROJECT
 
-A full-stack web application for store ratings, supporting multiple user roles (Admin, Owner, User).  
-Built for the **FullStack Intern Coding Challenge**.
+A full-stack web application for store ratings that supports multiple user roles (Admin, Owner, User). This repository contains a React frontend and a Python backend that implements REST APIs for authentication, store management, and ratings. The app was built as part of the FullStack Intern Coding Challenge.
 
----
+## Summary
 
-## 🚀 Tech Stack
-
-- **Backend:** Express.js (Node.js)
-- **Database:** MySQL (uses Prisma ORM)
-- **Frontend:** React.js
+Users can sign up and rate stores from 1 to 5 stars. Role-based access controls give admins the ability to manage users and stores and owners a dashboard to view the ratings for their store. The frontend is a React app and the backend is implemented in Python (FastAPI), using SQLAlchemy for ORM and Alembic for migrations. MySQL (or MariaDB) is used as the relational database.
 
 ---
 
-## 📁 Project Structure
+## Features
+
+- Role-based authentication and session management (Admin, Owner, User)
+- Admin dashboard: manage users, stores, and view totals (users, stores, ratings)
+- User flows: signup, login, search stores, submit and modify ratings (1–5 stars)
+- Owner flows: view ratings for their store and see average score
+- Store CRUD with image uploads (configurable storage)
+- Validation rules for forms (name, address, password, email)
+- Seed script to create demo accounts and initial data
+- REST API backend and React frontend kept in separate folders
+
+---
+
+## Tech stack
+
+- Backend: Python, FastAPI
+- ORM & migrations: SQLAlchemy + Alembic
+- Database: MySQL / MariaDB
+- Frontend: React.js (Create React App)
+- Authentication: JWT (or session-based, configurable)
+- Optional: Cloud storage for images (S3 / Cloudinary)
+- Development tools: pip, node, npm/yarn, uvicorn
+
+---
+
+## Project structure
 
 ```
-roxiler-backend/    # Express.js backend, Prisma ORM
-roxiler-frontend/   # React.js frontend
-```
-See full file tree below.
-
----
-
-## 🎯 Requirements & Purpose
-
-Build a web app for users to submit ratings for stores registered on the platform.  
-Ratings are between **1** and **5**.  
-A single login system is used for all users, with role-based access.
-
----
-
-## 👥 User Roles
-
-- System Administrator
-- Normal User
-- Store Owner
-
----
-
-## ⚡ Functionalities
-
-### 🛡️ System Administrator
-
-- Add new stores, users, owners, and admins.
-- Dashboard displays:
-  - Total users
-  - Total stores
-  - Total ratings
-- Add new users (Name, Email, Address, Password, Role).
-- List & manage stores (Name, Owner, Address, Rating).
-- List & manage users (Name, Email, Address, Role).
-- View details for all users, including their ratings/stores.
-- Delete stores/users (except self).
-- Logout.
-
-### 🙋 Normal User
-
-- Sign up & log in.
-- **Signup form:** Name, Email, Address, Password.
-- Update password after login.
-- View/search all stores (by Name/Address).
-- Store listings show:
-  - Store Name, Address
-  - Overall Rating
-  - User's Submitted Rating
-  - Option to submit/modify rating
-- Submit ratings (1-5) for stores via a star-based UI.
-- Logout.
-
-### 🏬 Store Owner
-
-- Log in.
-- Update password after login.
-- Dashboard shows:
-  - List of users who rated their store
-  - Average rating of their store
-- Logout.
-
----
-
-## ✅ Form Validations
-
-- **Name:** Min 20, Max 60 chars.
-- **Address:** Max 400 chars.
-- **Password:** 8-16 chars, at least one uppercase & special character.
-- **Email:** Standard email rules.
-
----
-
-## 📦 Full File Tree
-
-```
-ROXILER PROJECT
-├── roxiler-backend/
-│   ├── node_modules/ 🚫 (auto-hidden)
-│   ├── prisma/
-│   │   ├── migrations/
-│   │   │   ├── 20250822170045_init/
-│   │   │   │   └── migration.sql
-│   │   │   └── migration_lock.toml
-│   │   ├── schema.prisma
-│   │   └── seed.js
+roxiler-project/
+├── roxiler-backend/      # FastAPI backend (Python)
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── admin.py
+│   │   │   ├── auth.py
+│   │   │   ├── owner.py
+│   │   │   ├── stores.py
+│   │   │   └── user.py
+│   │   ├── core/
+│   │   │   ├── config.py
+│   │   │   └── security.py
+│   │   ├── models/       # SQLAlchemy models
+│   │   ├── schemas/      # Pydantic schemas
+│   │   ├── services/     # Business logic
+│   │   └── main.py       # FastAPI app factory
+│   ├── alembic/          # Alembic migration scripts
+│   ├── seed.py           # Optional seeding script
+│   ├── requirements.txt
+│   └── .env.example
+├── roxiler-frontend/     # React frontend
+│   ├── public/
 │   ├── src/
-│   │   ├── middleware/
-│   │   │   └── auth.js
-│   │   ├── routes/
-│   │   │   ├── admin.js
-│   │   │   ├── auth.js
-│   │   │   ├── owner.js
-│   │   │   ├── stores.js
-│   │   │   └── user.js
-│   │   ├── utils/
-│   │   │   └── validators.js
-│   │   ├── app.js
-│   │   ├── prisma.js
-│   │   └── server.js
-│   ├── .env 🚫 (auto-hidden)
-│   ├── .gitignore
-│   ├── package-lock.json
+│   │   ├── pages/
+│   │   ├── components/
+│   │   └── api.js
 │   ├── package.json
-│   └── roxiler-api.postman_collection.json
-└── roxiler-frontend/
-    ├── .git/ 🚫 (auto-hidden)
-    ├── node_modules/ 🚫 (auto-hidden)
-    ├── public/
-    │   ├── favicon.ico
-    │   ├── index.html
-    │   ├── logo192.png
-    │   ├── logo512.png
-    │   ├── manifest.json
-    │   └── robots.txt
-    ├── src/
-    │   ├── pages/
-    │   │   ├── AdminDashboard.js
-    │   │   ├── LoginPage.js
-    │   │   ├── LogoutButton.js
-    │   │   ├── OwnerDashboard.js
-    │   │   ├── SignupPage.js
-    │   │   ├── UpdatePassword.js
-    │   │   └── UserDashboard.js
-    │   ├── App.css
-    │   ├── App.js
-    │   ├── App.test.js
-    │   ├── api.js
-    │   ├── index.css
-    │   ├── index.js
-    │   ├── logo.svg
-    │   ├── reportWebVitals.js
-    │   └── setupTests.js
-    ├── .gitignore
-    ├── README.md
-    ├── package-lock.json
-    └── package.json
+│   └── README.md
+└── README.md             # This file
 ```
 
 ---
 
-## 🖥️ UI Features
+## Getting started — run the project locally
 
-- **Premium look:** Glassmorphism, smooth gradients, animated buttons.
-- **Star-based rating:** Users rate stores by clicking stars, with visual gold fill.
-- **Role-based dashboards:** Each user sees tailored UI and actions.
-- **Responsive design.**
+These steps will get both backend and frontend running on your machine for development.
 
----
+Prerequisites
+- Python 3.9+ (3.10 recommended)
+- Node.js 16+ and npm or yarn
+- MySQL or MariaDB running locally (or a managed instance)
 
-## 🏁 Getting Started — Run This Project from GitHub (For Beginners)
-
-If you’re new and only have **VS Code** installed, follow these step-by-step instructions:
-
----
-
-### 1. Clone the Repository
-
-Open VS Code, press <kbd>Ctrl</kbd> + <kbd>`</kbd> (backtick) to open the terminal, and run:
-
+1. Clone the repository
 ```bash
 git clone https://github.com/skshareef41319s/roxiler-project.git
 cd roxiler-project
 ```
 
----
-
-### 2. Install Node.js
-
-- Download and install **Node.js** (includes npm) from [nodejs.org](https://nodejs.org/en/download).
-- After installation, restart VS Code.
-
----
-
-### 3. Set Up the Backend
-
+2. Backend setup
 ```bash
 cd roxiler-backend
+
+# create virtual environment (recommended)
+python -m venv .venv
+# macOS / Linux
+source .venv/bin/activate
+# Windows (PowerShell)
+.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+```
+
+3. Configure environment variables
+
+Copy the example and update:
+```bash
+cp .env.example .env
+```
+Edit `.env` with your DB credentials and other secrets, for example:
+```
+DATABASE_URL=mysql+pymysql://dbuser:dbpass@localhost:3306/roxiler_db
+SECRET_KEY=your_secret_key
+ACCESS_TOKEN_EXPIRE_MINUTES=1440
+```
+
+4. Run migrations and seed data
+
+Generate and apply migrations with Alembic:
+```bash
+alembic upgrade head
+```
+(Optional) Populate demo accounts and sample stores:
+```bash
+python seed.py
+```
+
+5. Start the backend
+```bash
+# using uvicorn
+uvicorn app.main:app --reload --port 8000
+```
+The API will be available at: `http://localhost:8000`
+
+6. Frontend setup
+Open a new terminal and run:
+```bash
+cd roxiler-frontend
 npm install
-```
-
-#### 3.1. Configure the Database
-
-- Install **PostgreSQL** or **MySQL** locally ([PostgreSQL Download](https://www.postgresql.org/download/) | [MySQL Download](https://dev.mysql.com/downloads/installer/)).
-- Create an empty database (e.g., `roxiler_db`).
-
-- In `roxiler-backend/.env` (create this file if missing), add:
-
-  ```
-  DATABASE_URL="mysql://username:password@localhost:3306/roxiler_db"
-  JWT_SECRET="yoursecretkey"
-  ```
-
-#### 3.2. Run Migrations and Seed Data
-
-```bash
-npx prisma migrate dev --name init
-node prisma/seed.js
-```
-
-#### 3.3. Start the Backend Server
-
-```bash
 npm start
 ```
-
-Your backend API will run at `http://localhost:4000`.
-
----
-
-### 4. Set Up the Frontend
-
-Open a new terminal tab/window in VS Code and run:
-
-```bash
-cd ../roxiler-frontend
-npm install
-npm start
-```
-
-Your React app will run at `http://localhost:3000`.
+The React app will run by default at `http://localhost:3000`.
 
 ---
 
-### 5. Access the App
+## Default demo credentials
 
-- Open your browser and go to `http://localhost:3000`
-- You can now use the application!
+(These are created by the `seed.py` script. Change them before deploying.)
 
----
+- Admin: admin@roxiler.com / Admin@123
+- Owner: owner@shop.com / Owner@123
 
-### 6. Common Issues & Solutions
-
-- **Port already in use:** Use a different port (change in `package.json` or `.env`).
-- **Database errors:** Check your database credentials and make sure the database server is running.
-- **Missing .env file:** Create it and copy the sample above.
-- **npm not recognized:** Make sure Node.js and npm are installed.
-- **Prisma errors:** Run `npx prisma generate`
-- **Seed not running?** Make sure the DB is created and accessible.
+To add or change demo accounts, edit `roxiler-backend/seed.py` before running the seed script.
 
 ---
 
-### 7. Useful VS Code Extensions
+## Validation rules
 
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
-
----
-
-### 8. Explore & Edit
-
-- All project files are ready in VS Code.
-- You can explore backend code in `roxiler-backend/src/`
-- You can explore frontend code in `roxiler-frontend/src/pages/`
+- Name: 20–60 characters
+- Address: up to 400 characters
+- Password: 8–16 characters, at least one uppercase letter and one special character
+- Email: standard format validation
 
 ---
 
-## 🔑 Default Logins & How To Login (Demo/Test Accounts)
+## Common issues & troubleshooting
 
-> **For development or demo purposes, use the following credentials.  
-> You can change these in `prisma/seed.js` before running `node prisma/seed.js`.**
-
-| Role   | Email              | Password    |
-|--------|--------------------|------------|
-| Admin  | admin@roxiler.com  | Admin@123  |
-| Owner  | owner@shop.com     | Owner@123  |
-
-- **User:** Register any new user via the Signup page.  
-- **Admin/Owner:** Provided via seed data for quick demo access.
-- **To add more Admins/Owners:** Use the "Add User" form from the Admin dashboard and select the desired role.
+- Database connection errors: ensure MySQL is running and `DATABASE_URL` is correct.
+- Alembic errors: run `alembic revision --autogenerate -m "message"` if you change models, then `alembic upgrade head`.
+- Frontend CORS: the backend should enable CORS for `http://localhost:3000` in development.
+- Ports in use: change ports via `.env` (backend) or `package.json` (frontend).
 
 ---
 
-## 📝 Additional Notes
+## Development tips
 
-- Tables support sorting for key fields (Name, Email, etc.).
-- Best practices used for frontend & backend.
-- Database schema follows best practices.
-- All features validated as per challenge requirements.
-
----
-
-## 🧑‍💻 Author
-
-- [skshareef41319s](https://github.com/skshareef41319s)
+- Use the FastAPI interactive docs at `http://localhost:8000/docs` to explore and test APIs.
+- Use a tool such as Postman or Insomnia for manual API testing.
+- Use `uvicorn --reload` for development to auto-reload on code changes.
+- Use `npx create-react-app` tools and React devtools when updating frontend components.
 
 ---
 
-## 💡 License
+## Recommended VS Code extensions
 
-This project is for learning and demo purposes (FullStack Intern Coding Challenge).
+- Python
+- Pylance
+- ESLint
+- Prettier
+- Prisma (if using in other projects)
+- Reactjs code snippets
+
+---
+
+## Contributing
+
+Contributions are welcome. Suggested workflow:
+1. Fork the repo
+2. Create a branch: `git checkout -b feature/your-feature`
+3. Commit, push, and open a pull request
+
+Please include tests or verification steps for changes affecting authentication, rating calculations, or migrations.
+
+---
+
+## License
+
+This project is provided for learning and demonstration purposes. Add a LICENSE file (MIT recommended) to make the terms explicit.
+
+---
+
+## Contact
+
+Author: skshareef41319s  
+GitHub: https://github.com/skshareef41319s
